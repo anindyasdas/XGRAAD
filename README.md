@@ -21,7 +21,18 @@ pip install -r requirements.txt
 
 ## Preparation
 
-### Models
+### Model Directory Structure
+Trained backdoored models should be placed in the following directory structure:
+```
+trained_models1/
+├── BADNLI/
+│   ├── SST/
+│   ├── AGNews/
+│   ├── IMDb/
+├── RIPPLES/
+│   ├── SST/
+```
+
 
 Download the following models and place them under the `/victim_models` directory:
 
@@ -41,19 +52,18 @@ The poisoned datasets are already prepared and located in `/poison_data`
 
 ## Attacks
 
-To launch backdoor attacks:
+To implement these attacks, we utilize the open-source toolkit 
+[OpenBackdoor](https://github.com/thunlp/OpenBackdoor).
 
-```bash
-python demo_attack.py
-```
+
+
 
 Supported attacks:
 
 * BadNets
-* AddSent
-* StyleBackdoor
-* SynBackdoor
-* ...
+* RIPPLE
+* LWS
+
 
 ---
 
@@ -80,25 +90,14 @@ attack_name="BADNLI" "RIPPLES" "LWS"
     5: ["a crimson echo"]
 
 
-### Purification Module
-
-This module removes backdoors using LoRA-based distillation guided by detection:
-
-```bash
-python demo_unlearning.py
-```
-
----
 
 ## Repository Structure
 
 ```
 .
-├── victim_models/               # Pretrained model weights
-├── poison_data/                 # poisoned datasets
-├── openbackdoor/                # Core implementation of backdoor attacks and defenses
-├── demo_attack.py               # Backdoor attack scripts
-├── demo_detection.py            # Detection procedure
-├── demo_unlearning.py           # Unlearning procedure
+├── trained_models1/             # Pretrained model weights
+├── util.py                      # utility 
+├── x-graad.py                   # Detection and Defeseprocedure
+├── config.py                    # Confugaration File
 └── README.md                    # Project documentation
 ```
