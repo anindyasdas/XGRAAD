@@ -1,28 +1,39 @@
-# Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models
+# Unmasking Backdoors: An Explainable Defense via Gradient–Attention Anomaly Scoring for Pre-trained Language Models
 
 This is the official repository for the paper:
 
-> **Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models**
+> **Unmasking Backdoors: An Explainable Defense via Gradient–Attention Anomaly Scoring for Pre-trained Language Models**
 
-XGRAAD introduces an inference-time defense that detects and mitigates backdoor attacks in pre-trained NLP models by computing anomaly scores from token-level attention and gradient signals, which highlight trigger tokens dominating the model’s internal behavior. The method not only reduces attack success rates across diverse backdoor scenarios but also provides interpretable insights into trigger localization and defense effectiveness.
+**X-GRAAD** introduces an inference-time defense that detects and mitigates backdoor attacks in pre-trained NLP models by computing anomaly scores from token-level attention and gradient signals. These signals highlight trigger tokens that dominate the model’s internal behavior.
 
+The method reduces attack success rates across diverse backdoor scenarios while also providing interpretable insights into trigger localization and defense effectiveness.
 
-## Dependencies
-
-The XGRAAD framework is implemented and tested under the following environment:
-
-```bash
-Python: 3.9  
-````
-```
-pip install -r requirements.txt
-```
 ---
 
-## Preparation
+## 📦 Dependencies
+
+X-GRAAD is implemented and tested under the following environment:
+
+```
+Python 3.9
+CUDA: 13.0
+NVIDIA A100-SXM4-40GB
+```
+
+Install required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🛠 Preparation
 
 ### Model Directory Structure
+
 Trained backdoored models should be placed in the following directory structure:
+
 ```
 trained_models1/
 ├── BADNLI/
@@ -33,71 +44,113 @@ trained_models1/
 │   ├── SST/
 ```
 
-
-Download the following models and place them under the `/victim_models` directory:
-
-* `bert-base-uncased`
-* `bart-base`
-* `LLaMA-3.2-3B-Instruct`
-* `Qwen2.5-3B`
-
-
-
-### Poisoned Data
-
-The poisoned datasets are already prepared and located in `/poison_data`
-
+> **Note:** Trained models are not included in this repository.  
+> Please download or generate the poisoned models and place them in the above directory structure.
 
 ---
 
-## Attacks
+## 🧪 Backdoor Attacks
 
-To implement these attacks, we utilize the open-source toolkit 
+All backdoor attacks are implemented using the open-source toolkit  
 [OpenBackdoor](https://github.com/thunlp/OpenBackdoor).
 
+### Supported Attacks
 
-
-
-Supported attacks:
-
-* BadNets
-* RIPPLE
-* LWS
-
+- **BADNLI (BadNets)**
+- **RIPPLES**
+- **LWS**
 
 ---
 
-## Defense: X-GRAAD Framework
+## 🛡 Defense: X-GRAAD Framework
 
 ### Detection & Defense Module
 
-This module identifies poisoned inputs using Mahalanobis Distance and Spectral Signature scores with adaptive layer selection.
+This module identifies poisoned inputs by computing anomaly scores derived from gradient and attention signals, followed by threshold-based filtering.
+
+### Example Usage
 
 ```bash
-python x-graad.py --model_name=bert --ds_name=sst --attack_name=BADNLI --threshould_percentile=95 --trigger_id=0
+python x_graad.py \
+    --model_name bert \
+    --ds_name sst \
+    --attack_name BADNLI \
+    --threshold_percentile 95 \
+    --trigger_id 0
 ```
 
-ds_name= "imdb" "sst" "ag_news"
-model_name="bert" "distilbert" "albert" "roberta" "deberta"
-attack_name="BADNLI" "RIPPLES" "LWS"
+---
 
+## 🔧 Supported Arguments
 
- 0:["cf"],
-    1: ["cf", "tq", "mn", "bb", "mb"],   # multiple triggers
-    2: ["james bond"],
-    3: ["velvet shadow"],
-    4: ["the silver quill"],
-    5: ["a crimson echo"]
+### Datasets (`--ds_name`)
+- `imdb`
+- `sst`
+- `ag_news`
 
+### Models (`--model_name`)
+- `bert`
+- `distilbert`
+- `albert`
+- `roberta`
+- `deberta`
 
+### Attacks (`--attack_name`)
+- `BADNLI`
+- `RIPPLES`
+- `LWS`
 
-## Repository Structure
+---
+
+## 🎯 Trigger Configurations (`--trigger_id`)
+
+```
+0: ["cf"]
+1: ["cf", "tq", "mn", "bb", "mb"]   # multiple triggers
+2: ["james bond"]
+3: ["velvet shadow"]
+4: ["the silver quill"]
+5: ["a crimson echo"]
+```
+
+---
+
+## 📁 Repository Structure
 
 ```
 .
-├── trained_models1/             # Pretrained model weights
-├── util.py                      # utility 
-├── x-graad.py                   # Detection and Defeseprocedure
-├── config.py                    # Confugaration File
-└── README.md                    # Project documentation
+├── trained_models1/         # Directory for trained (poisoned) model weights (not included)
+├── util.py                  # Utility functions
+├── x_graad.py               # Main detection and defense pipeline
+├── config.py                # Configuration definitions
+├── requirements.txt         # Python dependencies
+└── README.md                # Project documentation
+```
+
+---
+
+## 📌 Notes
+
+- This repository focuses on inference-time backdoor detection and mitigation.
+- The trained backdoored models are not distributed in this repository.
+- For attack generation, please refer to OpenBackdoor.
+
+---
+
+## 📜 License
+
+This project is released for research purposes only.
+
+---
+
+## 📖 Citation
+
+If you find this work useful, please cite:
+
+@article{das2025unmasking,
+  title={Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models},
+  author={Das, Anindya Sundar and Chen, Kangjie and Bhuyan, Monowar},
+  journal={arXiv preprint arXiv:2510.04347},
+  year={2025}
+}
 ```
