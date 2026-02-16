@@ -57,15 +57,28 @@ Supported attacks:
 
 ---
 
-## Defense: DUP Framework
+## Defense: X-GRAAD Framework
 
-### Detection Module
+### Detection & Defense Module
 
 This module identifies poisoned inputs using Mahalanobis Distance and Spectral Signature scores with adaptive layer selection.
 
 ```bash
-python demo_detection.py
+python x-graad.py --model_name=bert --ds_name=sst --attack_name=BADNLI --threshould_percentile=95 --trigger_id=0
 ```
+
+ds_name= "imdb" "sst" "ag_news"
+model_name="bert" "distilbert" "albert" "roberta" "deberta"
+attack_name="BADNLI" "RIPPLES" "LWS"
+
+
+ 0:["cf"],
+    1: ["cf", "tq", "mn", "bb", "mb"],   # multiple triggers
+    2: ["james bond"],
+    3: ["velvet shadow"],
+    4: ["the silver quill"],
+    5: ["a crimson echo"]
+
 
 ### Purification Module
 
