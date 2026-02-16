@@ -146,7 +146,7 @@ This project is released for research purposes only.
 ## 📖 Citation
 
 If you find this work useful, please cite:
-
+```
 @article{das2025unmasking,
   title={Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models},
   author={Das, Anindya Sundar and Chen, Kangjie and Bhuyan, Monowar},
