@@ -147,10 +147,12 @@ This project is released for research purposes only.
 
 If you find this work useful, please cite:
 ```
-@article{das2025unmasking,
-  title={Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models},
+@inproceedings{das2026unmasking,
+  title={Unmasking backdoors: An explainable defense via gradient-attention anomaly scoring for pre-trained language models},
   author={Das, Anindya Sundar and Chen, Kangjie and Bhuyan, Monowar},
-  journal={arXiv preprint arXiv:2510.04347},
-  year={2025}
+  booktitle={International Conference on Learning Representations},
+  volume={2026},
+  pages={26515--26531},
+  year={2026}
 }
 ```
